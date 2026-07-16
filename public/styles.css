@@ -3167,3 +3167,331 @@ body::after {
     min-width: 106px;
   }
 }
+
+
+/* v7: spam-friendly Aura, reliable preview scrolling and compact mobile layout */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.command-window {
+  display: flex;
+  flex-direction: column;
+}
+
+.window-bar {
+  flex: 0 0 58px;
+}
+
+.hero-command-center {
+  min-height: 690px;
+}
+
+.command-content {
+  display: grid;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  overflow: hidden;
+  align-items: stretch;
+  grid-template-rows: minmax(330px, 1fr) minmax(0, 240px);
+}
+
+.command-status-list {
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  overflow-y: auto;
+  padding-bottom: 32px;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.command-status-list:focus-visible {
+  border-radius: 15px;
+  outline: 2px solid rgba(66, 232, 255, 0.48);
+  outline-offset: 3px;
+}
+
+.aura-button {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.aura-button:active {
+  transform: translateY(1px) scale(0.96);
+}
+
+@media (max-width: 1040px) {
+  .hero-command-center {
+    min-height: 680px;
+  }
+}
+
+@media (max-width: 720px) {
+  .community-shell {
+    width: min(100% - 20px, 1560px);
+  }
+
+  .community-topbar {
+    min-height: auto;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 0 12px;
+  }
+
+  .community-topbar .brand-logo-image {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+  }
+
+  .community-topbar .topbar-actions {
+    display: flex;
+    margin-left: auto;
+    gap: 7px;
+  }
+
+  .community-topbar .status-pill.aura-button {
+    display: inline-flex;
+    min-width: 0;
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+  }
+
+  .community-topbar .aura-button-score {
+    min-width: 20px;
+    padding-left: 6px;
+    font-size: 0.68rem;
+  }
+
+  .community-topbar .control-button {
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 0.64rem;
+  }
+
+  .community-hero {
+    gap: 38px;
+    padding: 34px 0 72px;
+  }
+
+  .hero-copy-column h1 {
+    margin-top: 18px;
+    font-size: clamp(2.85rem, 13vw, 4.6rem);
+    line-height: 0.95;
+  }
+
+  .hero-copy {
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    gap: 9px;
+    margin-top: 24px;
+  }
+
+  .hero-actions .button {
+    flex: 1 1 145px;
+    min-height: 44px;
+    padding-inline: 14px;
+    font-size: 0.78rem;
+  }
+
+  .community-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-top: 24px;
+  }
+
+  .community-stat {
+    min-height: 72px;
+    padding: 11px 9px;
+    border-radius: 14px;
+  }
+
+  .community-stat strong {
+    font-size: 1.22rem;
+  }
+
+  .community-stat span {
+    margin-top: 5px;
+    font-size: 0.54rem;
+    line-height: 1.25;
+    letter-spacing: 0.055em;
+  }
+
+  .hero-command-center {
+    min-height: 660px;
+  }
+
+  .command-window {
+    inset: 0;
+    height: 100%;
+  }
+
+  .command-content {
+    padding: 14px;
+    grid-template-rows: 270px minmax(0, 1fr);
+  }
+
+  .network-orbit {
+    --node-orbit-radius: 112px;
+    width: 250px;
+    margin-block: 2px 8px;
+  }
+
+  .command-status-list {
+    padding-right: 4px;
+    padding-bottom: 26px;
+  }
+
+  .command-status-row {
+    grid-template-columns: 8px minmax(0, 1fr) auto;
+    gap: 9px;
+    padding: 10px 11px;
+    border-radius: 12px;
+  }
+
+  .command-status-row strong {
+    font-size: 0.74rem;
+  }
+
+  .command-status-row > span:last-child {
+    font-size: 0.63rem;
+  }
+
+  .server-section {
+    margin-bottom: 72px;
+  }
+
+  .game-server-grid {
+    gap: 14px;
+    padding: 8px 0 22px;
+    scroll-padding-inline: 0;
+  }
+
+  .game-server-card {
+    flex: 0 0 min(88vw, 390px) !important;
+    min-height: 0;
+    border-radius: 24px;
+  }
+
+  .server-card-visual {
+    min-height: 220px;
+    flex-basis: 220px;
+    padding: 16px;
+  }
+
+  .server-live-badge {
+    padding: 7px 10px;
+    font-size: 0.63rem;
+  }
+
+  .server-visual-title {
+    right: 16px;
+    bottom: 14px;
+    left: 16px;
+  }
+
+  .server-game-label {
+    font-size: 0.66rem;
+  }
+
+  .server-visual-title h3 {
+    margin-top: 6px;
+    font-size: clamp(1.7rem, 8.5vw, 2.25rem);
+    line-height: 0.98;
+  }
+
+  .server-card-body {
+    padding: 17px 17px 19px;
+  }
+
+  .server-card-description {
+    min-height: 0;
+    font-size: 0.88rem;
+    line-height: 1.52;
+  }
+
+  .server-tags {
+    min-height: 0;
+    gap: 6px;
+    margin: 14px 0 18px;
+  }
+
+  .server-tags span {
+    padding: 6px 8px;
+    font-size: 0.62rem;
+  }
+
+  .player-row {
+    font-size: 0.74rem;
+  }
+
+  .server-details {
+    min-height: 0;
+    grid-template-columns: minmax(92px, 0.75fr) minmax(0, 1.25fr);
+    gap: 8px 12px;
+    margin: 17px 0;
+    padding: 15px 0;
+    font-size: 0.72rem;
+  }
+
+  .server-details dd {
+    overflow: visible;
+    font-size: 0.72rem;
+    line-height: 1.35;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .server-card-actions {
+    min-height: 0;
+    margin-top: 0;
+    gap: 8px;
+  }
+
+  .server-join-button,
+  .modpack-download-button,
+  .copy-address-button {
+    min-height: 42px;
+    font-size: 0.7rem;
+  }
+
+  .server-carousel-controls {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .community-topbar .status-pill.aura-button {
+    display: inline-flex;
+  }
+
+  .community-topbar .control-button {
+    display: inline-flex;
+  }
+
+  .game-server-card {
+    flex-basis: calc(100vw - 30px) !important;
+  }
+
+  .server-card-visual {
+    min-height: 205px;
+    flex-basis: 205px;
+  }
+
+  .server-details {
+    grid-template-columns: minmax(86px, 0.7fr) minmax(0, 1.3fr);
+  }
+}

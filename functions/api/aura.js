@@ -1,5 +1,4 @@
 const AWARD_AMOUNT = 100;
-const AWARD_COOLDOWN_MS = 5_000;
 const MAX_SCORE = 1_000_000_000;
 
 function json(data, status = 200, extraHeaders = {}) {
@@ -116,16 +115,6 @@ async function createPlayer(db, playerId, name, now) {
 }
 
 async function awardExistingPlayer(db, player, now) {
-  const elapsed = now - (Number(player.last_award_at) || 0);
-  if (elapsed < AWARD_COOLDOWN_MS) {
-    return {
-      error: "Deine Aura lädt noch.",
-      code: "COOLDOWN",
-      retryAfterMs: AWARD_COOLDOWN_MS - elapsed,
-      status: 429,
-    };
-  }
-
   const result = await db.prepare(`
     UPDATE aura_players
     SET
@@ -133,23 +122,18 @@ async function awardExistingPlayer(db, player, now) {
       last_award_at = ?3,
       updated_at = ?3
     WHERE player_id = ?4
-      AND (?3 - last_award_at) >= ?5
   `).bind(
     MAX_SCORE,
     AWARD_AMOUNT,
     now,
     player.player_id,
-    AWARD_COOLDOWN_MS,
   ).run();
 
   if (!result.success || Number(result.meta && result.meta.changes) < 1) {
-    const latest = await readPlayer(db, player.player_id);
-    const latestElapsed = now - (Number(latest && latest.last_award_at) || 0);
     return {
-      error: "Deine Aura lädt noch.",
-      code: "COOLDOWN",
-      retryAfterMs: Math.max(250, AWARD_COOLDOWN_MS - latestElapsed),
-      status: 429,
+      error: "Das Aura-Profil konnte nicht aktualisiert werden.",
+      code: "PLAYER_NOT_FOUND",
+      status: 404,
     };
   }
 

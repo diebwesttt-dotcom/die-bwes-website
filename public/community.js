@@ -25,7 +25,10 @@
     playerId: "",
     playerName: "",
     score: 0,
-    busy: false,
+    confirmedScore: 0,
+    pendingAwards: 0,
+    processingAwards: false,
+    requestingName: false,
     nameResolver: null,
     refreshTimer: 0
   };
@@ -390,10 +393,12 @@
       auraState.playerId = localStorage.getItem(auraStorageKeys.playerId) || "";
       auraState.playerName = localStorage.getItem(auraStorageKeys.playerName) || "";
       auraState.score = Math.max(0, Number(localStorage.getItem(auraStorageKeys.score)) || 0);
+      auraState.confirmedScore = auraState.score;
     } catch (error) {
       auraState.playerId = "";
       auraState.playerName = "";
       auraState.score = 0;
+      auraState.confirmedScore = 0;
     }
   }
 
@@ -523,7 +528,8 @@
       const payload = await auraApi(`/api/aura${query}`);
       if (payload.player) {
         auraState.playerName = payload.player.name || auraState.playerName;
-        auraState.score = Math.max(0, Number(payload.player.score) || 0);
+        auraState.confirmedScore = Math.max(0, Number(payload.player.score) || 0);
+        auraState.score = auraState.confirmedScore + (auraState.pendingAwards * 100);
         writeAuraState();
         updateAuraProfileUI();
       }
@@ -633,66 +639,100 @@
     };
   }
 
+  async function processAuraQueue() {
+    if (auraState.processingAwards || auraState.pendingAwards < 1) return;
+    auraState.processingAwards = true;
+
+    while (auraState.pendingAwards > 0) {
+      try {
+        const payload = await auraApi("/api/aura", {
+          method: "POST",
+          body: JSON.stringify({
+            action: "award",
+            playerId: auraState.playerId,
+            name: auraState.playerName
+          })
+        });
+
+        auraState.pendingAwards -= 1;
+        auraState.playerName = payload.player.name;
+        auraState.confirmedScore = Math.max(0, Number(payload.player.score) || 0);
+        auraState.score = auraState.confirmedScore + (auraState.pendingAwards * 100);
+        writeAuraState();
+        updateAuraProfileUI();
+        renderAuraLeaderboard(payload.leaderboard || []);
+
+        if (auraState.pendingAwards > 0) {
+          setAuraStatus(`${auraState.pendingAwards} Aura-Klick${auraState.pendingAwards === 1 ? "" : "s"} werden noch gespeichert …`, false);
+        } else {
+          setAuraStatus("Alle Aura-Klicks gespeichert.", false);
+        }
+      } catch (error) {
+        if (error.status === 409 && error.payload && error.payload.code === "NAME_TAKEN") {
+          auraState.playerName = "";
+          try { localStorage.removeItem(auraStorageKeys.playerName); } catch (storageError) {}
+          updateAuraProfileUI();
+          setAuraStatus("Dieser Name ist bereits vergeben. Bitte wähle einen anderen.", true);
+          const dialogError = document.getElementById("aura-name-error");
+          if (dialogError) dialogError.textContent = "Dieser Name ist bereits vergeben.";
+
+          auraState.requestingName = true;
+          const replacementName = await requestAuraName();
+          auraState.requestingName = false;
+          if (replacementName) {
+            auraState.playerName = replacementName;
+            writeAuraState();
+            updateAuraProfileUI();
+            continue;
+          }
+
+          auraState.pendingAwards = 0;
+          auraState.score = auraState.confirmedScore;
+          writeAuraState();
+          updateAuraProfileUI();
+          break;
+        }
+
+        auraState.pendingAwards -= 1;
+        auraState.score = auraState.confirmedScore + (auraState.pendingAwards * 100);
+        writeAuraState();
+        updateAuraProfileUI();
+        setAuraStatus(error.message || "Aura konnte nicht gespeichert werden.", true);
+      }
+    }
+
+    auraState.processingAwards = false;
+    if (auraState.pendingAwards > 0) window.setTimeout(processAuraQueue, 0);
+  }
+
   async function awardAura() {
     const trigger = document.getElementById("aura-trigger");
-    if (!trigger || auraState.busy) return;
+    if (!trigger) return;
 
     if (!auraState.playerName) {
+      if (auraState.requestingName) return;
+      auraState.requestingName = true;
       const chosenName = await requestAuraName();
+      auraState.requestingName = false;
       if (!chosenName) return;
       auraState.playerName = chosenName;
     }
 
     if (!auraState.playerId) auraState.playerId = createAuraPlayerId();
+
+    auraState.pendingAwards += 1;
+    auraState.score += 100;
     writeAuraState();
     updateAuraProfileUI();
+    playAuraCelebration();
+    setAuraStatus(
+      auraState.pendingAwards === 1
+        ? "+100 AURA wird gespeichert …"
+        : `${auraState.pendingAwards} Aura-Klicks in der Warteschlange …`,
+      false
+    );
 
-    auraState.busy = true;
-    trigger.disabled = true;
-    setAuraStatus("Aura wird gesammelt …", false);
-
-    try {
-      const payload = await auraApi("/api/aura", {
-        method: "POST",
-        body: JSON.stringify({
-          action: "award",
-          playerId: auraState.playerId,
-          name: auraState.playerName
-        })
-      });
-
-      auraState.playerName = payload.player.name;
-      auraState.score = payload.player.score;
-      writeAuraState();
-      updateAuraProfileUI();
-      renderAuraLeaderboard(payload.leaderboard || []);
-      setAuraStatus("+100 AURA gespeichert.", false);
-      playAuraCelebration();
-    } catch (error) {
-      if (error.status === 409 && error.payload && error.payload.code === "NAME_TAKEN") {
-        auraState.playerName = "";
-        try { localStorage.removeItem(auraStorageKeys.playerName); } catch (storageError) {}
-        updateAuraProfileUI();
-        setAuraStatus("Dieser Name ist bereits vergeben. Bitte wähle einen anderen.", true);
-        const dialogError = document.getElementById("aura-name-error");
-        if (dialogError) dialogError.textContent = "Dieser Name ist bereits vergeben.";
-        const replacementName = await requestAuraName();
-        if (replacementName) {
-          auraState.playerName = replacementName;
-          writeAuraState();
-          updateAuraProfileUI();
-          window.setTimeout(awardAura, 0);
-        }
-      } else if (error.status === 429) {
-        const seconds = Math.max(1, Math.ceil(Number(error.payload && error.payload.retryAfterMs) / 1000) || 5);
-        setAuraStatus(`Deine Aura lädt noch. Versuche es in ${seconds} Sekunde${seconds === 1 ? "" : "n"} erneut.`, true);
-      } else {
-        setAuraStatus(error.message || "Aura konnte nicht gespeichert werden.", true);
-      }
-    } finally {
-      auraState.busy = false;
-      trigger.disabled = false;
-    }
+    processAuraQueue();
   }
 
   function setupAuraEffect() {
@@ -715,13 +755,22 @@
     if (!previewWindow || !statusList || previewWindow.dataset.scrollReady === "true") return;
 
     previewWindow.dataset.scrollReady = "true";
+    statusList.tabIndex = 0;
+    statusList.setAttribute("aria-label", "Scrollbare Serverliste im Vorschaufenster");
+
     previewWindow.addEventListener("wheel", function (event) {
-      const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+      const rawDelta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+      const scale = event.deltaMode === 1 ? 22 : event.deltaMode === 2 ? statusList.clientHeight : 1;
+      const delta = rawDelta * scale;
       const maximum = Math.max(0, statusList.scrollHeight - statusList.clientHeight);
       if (maximum <= 0 || delta === 0) return;
 
+      const current = statusList.scrollTop;
+      const next = Math.max(0, Math.min(maximum, current + delta));
+      if (Math.abs(next - current) < 0.5) return;
+
       event.preventDefault();
-      statusList.scrollTop = Math.max(0, Math.min(maximum, statusList.scrollTop + delta));
+      statusList.scrollTop = next;
     }, { passive: false });
   }
 
