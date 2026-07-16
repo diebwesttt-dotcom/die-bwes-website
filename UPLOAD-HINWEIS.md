@@ -1,9 +1,16 @@
-# GitHub-Update Version 7
+# Vorschaufenster-Fix v8
 
-1. Diese ZIP entpacken.
-2. Im GitHub-Repository `die-bwes-website` auf **Add file → Upload files** klicken.
-3. Die Ordner `functions` und `public` aus diesem Paket in das Upload-Fenster ziehen.
-4. Als Commit-Nachricht z. B. `Aura-Spam und Mobile Layout v7` verwenden.
-5. Direkt nach `main` committen.
+1. ZIP entpacken.
+2. Im bestehenden GitHub-Repository `Add file` → `Upload files` öffnen.
+3. Den Ordner `public` aus diesem Paket hochladen.
+4. Vorhandene Dateien ersetzen und direkt nach `main` committen.
 
-Cloudflare Pages startet danach automatisch ein neues Deployment. Das bestehende D1-Binding `DB` und die Ranglistendaten bleiben erhalten.
+Cloudflare Pages startet danach automatisch ein neues Deployment.
+Die D1-Datenbank und bestehende Aura-Punkte bleiben unverändert.
+
+## Änderung
+
+- Das Desktop-Vorschaufenster ist höher und sauber aufgeteilt.
+- Die Serverliste besitzt jetzt genügend sichtbare Höhe.
+- Die letzte Server- bzw. Capybara-Zeile kann vollständig erreicht werden.
+- Der Orbit wurde auf Desktop leicht verkleinert, damit nichts außerhalb des Fensters liegt.

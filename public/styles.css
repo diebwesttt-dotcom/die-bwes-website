@@ -3495,3 +3495,55 @@ html {
     grid-template-columns: minmax(86px, 0.7fr) minmax(0, 1.3fr);
   }
 }
+
+/* v8: Desktop-Vorschaufenster vollständig bis zur letzten Zeile scrollbar */
+@media (min-width: 1041px) {
+  .hero-command-center {
+    min-height: 800px;
+  }
+
+  .command-content {
+    padding: 20px 28px 24px;
+    grid-template-rows: minmax(0, 1fr) 350px;
+  }
+
+  .network-orbit {
+    --node-orbit-radius: 128px;
+    width: min(280px, 72%);
+    margin: 0 auto 8px;
+  }
+
+  .command-status-list {
+    min-height: 0;
+    height: 100%;
+    max-height: none;
+    padding-bottom: 18px;
+    scroll-padding-block: 8px 18px;
+  }
+
+  .command-status-list > :last-child {
+    scroll-margin-bottom: 18px;
+  }
+}
+
+@media (min-width: 721px) and (max-width: 1040px) {
+  .hero-command-center {
+    min-height: 730px;
+  }
+
+  .command-content {
+    padding-bottom: 22px;
+    grid-template-rows: minmax(0, 1fr) 285px;
+  }
+
+  .network-orbit {
+    --node-orbit-radius: 126px;
+    width: min(285px, 76%);
+    margin-bottom: 8px;
+  }
+
+  .command-status-list {
+    padding-bottom: 18px;
+    scroll-padding-bottom: 18px;
+  }
+}
