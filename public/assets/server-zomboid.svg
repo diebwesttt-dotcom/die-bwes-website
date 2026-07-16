@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#432b1e"/><stop offset=".45" stop-color="#191a20"/><stop offset="1" stop-color="#080a0f"/></linearGradient>
+    <radialGradient id="fog"><stop stop-color="#f0c884" stop-opacity=".34"/><stop offset="1" stop-color="#f0c884" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#bg)"/>
+  <circle cx="690" cy="250" r="290" fill="url(#fog)"/>
+  <path d="M0 690 130 620 220 655 340 545 470 615 585 515 730 600 900 530V1100H0Z" fill="#101116"/>
+  <path d="M350 1100 430 610h80l70 490Z" fill="#25232a"/>
+  <path d="m435 1010 22-95h25l18 95Zm38-185 12-76h19l10 76Z" fill="#d2b36a" fill-opacity=".5"/>
+  <g fill="#0b0c10"><rect x="85" y="555" width="250" height="230"/><path d="m60 555 150-120 155 120Z"/><rect x="612" y="495" width="170" height="255"/><path d="m590 495 105-88 112 88Z"/></g>
+  <g stroke="#bd915b" stroke-width="9" stroke-linecap="round" opacity=".55"><path d="M180 640v90M145 685h70M690 575v92M655 620h70"/></g>
+  <g fill="#08090d"><circle cx="690" cy="715" r="24"/><path d="M665 747h50l38 150h-35l-29-92-25 92h-36Z"/></g>
+  <text x="60" y="980" fill="#fff" fill-opacity=".1" font-family="Arial, sans-serif" font-size="108" font-weight="900">PZ</text>
+</svg>

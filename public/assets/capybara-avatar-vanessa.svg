@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Weibliches Capybara mit langen braunen Haaren">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#172a21"/>
+      <stop offset="1" stop-color="#0d1729"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <circle cx="64" cy="64" r="45" fill="rgba(255,255,255,0.08)"/>
+  <path d="M30 78c0-26 14-44 34-44s34 18 34 44c0 10-2 18-6 24H36c-4-6-6-14-6-24z" fill="#6b432c"/>
+  <path d="M38 46c8-12 16-18 26-18 11 0 20 6 26 18l-5 8c-7-7-13-10-21-10-7 0-13 3-21 10z" fill="#8b5a3d"/>
+  <path d="M27 82c4-5 10-8 16-9v24H32c-4-5-5-9-5-15z" fill="#6b432c"/>
+  <path d="M101 82c-4-5-10-8-16-9v24h11c4-5 5-9 5-15z" fill="#6b432c"/>
+  <ellipse cx="64" cy="67" rx="31" ry="25" fill="#a2795d"/>
+  <ellipse cx="42" cy="44" rx="9" ry="11" fill="#a2795d"/>
+  <ellipse cx="86" cy="44" rx="9" ry="11" fill="#a2795d"/>
+  <ellipse cx="42" cy="42" rx="4.5" ry="6" fill="#7a5d4a"/>
+  <ellipse cx="86" cy="42" rx="4.5" ry="6" fill="#7a5d4a"/>
+  <ellipse cx="64" cy="71" rx="15" ry="10" fill="#cba68a"/>
+  <circle cx="53" cy="63" r="3.6" fill="#1f2233"/>
+  <circle cx="75" cy="63" r="3.6" fill="#1f2233"/>
+  <ellipse cx="64" cy="72" rx="3.7" ry="2.5" fill="#5b4539"/>
+  <path d="M58 77c2 2 4 3 6 3s4-1 6-3" fill="none" stroke="#5b4539" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M44 57c6-4 12-6 20-6s14 2 20 6" fill="none" stroke="#52f2a4" stroke-width="4" stroke-linecap="round" opacity=".65"/>
+  <circle cx="101" cy="101" r="14" fill="#52f2a4" opacity=".95"/>
+  <text x="101" y="106" text-anchor="middle" font-size="12" font-family="Arial, sans-serif" font-weight="700" fill="#fff">V</text>
+</svg>

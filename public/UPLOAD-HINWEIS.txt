@@ -1,0 +1,12 @@
+CLOUDFLARE-UPLOAD
+=================
+
+Diese ZIP direkt als neues Deployment in dein bestehendes Cloudflare-Pages-Projekt hochladen.
+Die Live-Daten kommen von:
+
+https://mcstatus.diebwes.com/api/server-status?server=vanilla
+https://mcstatus.diebwes.com/api/server-status?server=modpack
+https://mcstatus.diebwes.com/api/server-status?server=ttt
+https://mcstatus.diebwes.com/api/server-status?server=palworld
+
+Auf Cloudflare Pages ist kein Worker und keine Function nötig.

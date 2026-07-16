@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#123149"/><stop offset=".58" stop-color="#1f5162"/><stop offset="1" stop-color="#0c1723"/></linearGradient>
+    <radialGradient id="sun"><stop stop-color="#a8fff0" stop-opacity=".9"/><stop offset="1" stop-color="#a8fff0" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#sky)"/>
+  <circle cx="690" cy="245" r="240" fill="url(#sun)"/>
+  <g opacity=".28" fill="#c7fbff"><rect x="100" y="180" width="190" height="42"/><rect x="170" y="138" width="84" height="42"/><rect x="540" y="325" width="210" height="42"/><rect x="620" y="283" width="90" height="42"/></g>
+  <path d="M0 650h180V540h110v70h120V450h125v115h105V500h160v150h100v450H0Z" fill="#142a28"/>
+  <path d="M0 720h180v-90h150v58h120v-128h145v96h130v-62h175v506H0Z" fill="#214536"/>
+  <g fill="#57b96d"><rect x="0" y="665" width="180" height="55"/><rect x="180" y="630" width="150" height="55"/><rect x="330" y="642" width="120" height="55"/><rect x="450" y="560" width="145" height="55"/><rect x="595" y="611" width="130" height="55"/><rect x="725" y="594" width="175" height="55"/></g>
+  <g opacity=".18" fill="#fff"><rect x="60" y="55" width="55" height="55"/><rect x="115" y="110" width="55" height="55"/><rect x="760" y="80" width="55" height="55"/></g>
+  <text x="60" y="980" fill="#fff" fill-opacity=".13" font-family="Arial, sans-serif" font-size="110" font-weight="900">SMP</text>
+</svg>

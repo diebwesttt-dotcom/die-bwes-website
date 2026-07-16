@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Die Bwes Community – Game Server, Discord und Crew an einem Ort.">
+  <meta name="theme-color" content="#070912">
+  <title>Die Bwes | Community</title>
+  <link rel="icon" type="image/png" href="/assets/diebwes-logo.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="home-page">
+  <div class="background-grid"></div>
+  <div class="noise"></div>
+
+  <div class="aura-celebration" id="aura-celebration" aria-hidden="true">
+    <video class="aura-overlay-video" id="aura-overlay-video" src="/assets/aura-overlay.mp4" muted playsinline preload="metadata"></video>
+    <div class="aura-reward-popup" id="aura-reward-popup" role="status" aria-live="polite" aria-atomic="true">
+      <strong>+100</strong>
+      <span>AURA</span>
+    </div>
+  </div>
+  <audio id="aura-sound" src="/assets/aura.mp3" preload="auto"></audio>
+
+  <dialog class="aura-name-dialog" id="aura-name-dialog" aria-labelledby="aura-name-title">
+    <form class="aura-name-form" id="aura-name-form" method="dialog" novalidate>
+      <button class="aura-dialog-close" id="aura-name-cancel" type="button" aria-label="Namensfenster schließen">×</button>
+      <span class="eyebrow">Dein Aura-Profil</span>
+      <h2 id="aura-name-title">Wie heißt du?</h2>
+      <p>Beim ersten Aura-Punkt brauchst du einen Namen für die Rangliste. Es ist kein Konto und keine Anmeldung nötig.</p>
+      <label for="aura-player-name">Anzeigename</label>
+      <input class="aura-name-input" id="aura-player-name" name="playerName" type="text" minlength="2" maxlength="18" autocomplete="nickname" placeholder="z. B. CapyKing" required>
+      <small>2–18 Zeichen. Buchstaben, Zahlen, Leerzeichen, Punkt, Minus und Unterstrich sind erlaubt.</small>
+      <div class="aura-name-error" id="aura-name-error" role="alert" aria-live="polite"></div>
+      <button class="button aura-name-submit" type="submit">Namen speichern &amp; +100 AURA</button>
+    </form>
+  </dialog>
+
+  <div class="site-shell community-shell">
+    <header class="topbar community-topbar">
+      <a class="brand brand-with-image" href="/" aria-label="Die Bwes Startseite">
+        <img class="brand-logo-image" src="/assets/diebwes-logo.png" alt="Die Bwes Server Logo">
+        <span class="brand-name">Die Bwes</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Hauptnavigation">
+        <a href="#server">Server</a>
+        <a href="#aura-ranking">Aura</a>
+        <a href="#discord">Discord</a>
+        <a href="#team">Team</a>
+      </nav>
+
+      <div class="topbar-actions">
+        <button class="status-pill aura-button" id="aura-trigger" type="button" aria-label="100 Aura einsammeln" title="+100 Aura einsammeln">
+          <span class="status-dot"></span>
+          <span>Aura</span>
+          <strong class="aura-button-score" id="aura-button-score" aria-live="polite">0</strong>
+        </button>
+        <a class="button button-secondary control-button" href="/portal/">Control Center</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="community-hero" aria-labelledby="hero-title">
+        <div class="hero-copy-column">
+          <span class="eyebrow">Willkommen mein Akh</span>
+          <h1 id="hero-title"><span class="gradient-text">Gemeinsam zocken.</span><br>Welten Erschaffen.</h1>
+          <p class="hero-copy">
+            Willkommen Bwe. Hier findest du unsere laufenden Game Server, Aktuelle Infos und den direkten Weg in die Community.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button" href="#server">Games entdecken <span aria-hidden="true">↓</span></a>
+            <a class="button button-discord" href="https://discord.gg/m3AnHkUTm2" target="_blank" rel="noopener noreferrer">
+              <img class="button-icon-image" src="/assets/discord-logo.jpg" alt="" aria-hidden="true">
+              Discord beitreten
+            </a>
+          </div>
+
+          <div class="community-stats" aria-label="Community Übersicht">
+            <div class="community-stat">
+              <strong id="online-server-count">0</strong>
+              <span>Server online</span>
+            </div>
+            <div class="community-stat">
+              <strong id="total-player-count">0</strong>
+              <span>Spieler verbunden</span>
+            </div>
+            <div class="community-stat">
+              <strong>24/7</strong>
+              <span>Community Betrieb</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-command-center" aria-label="Community Status">
+          <div class="command-window">
+            <div class="window-bar">
+              <div class="window-controls" tabindex="0" aria-label="Fensteraktionen mit verstecktem Capybara">
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+                <div class="window-controls-popup" role="tooltip" aria-label="Verstecktes Capybara im Superheldenanzug">
+                  <div class="window-controls-popup-copy">
+                    <strong>Geheimes Popup</strong>
+                    <span>Hier versteckt sich ein kleines Capybara im Superhelden-Anzug.</span>
+                  </div>
+                  <img src="/assets/capybara-superhero.svg" alt="Verstecktes Capybara mit Superhelden-Anzug">
+                </div>
+              </div>
+              <span class="window-title">BWES NETWORK // LIVE</span>
+            </div>
+
+            <div class="command-content">
+              <div class="network-orbit" role="group" aria-label="Schnellnavigation zu den ersten vier Spielwelten">
+                <span class="orbit orbit-one"></span>
+                <span class="orbit orbit-two"></span>
+                <span class="orbit-logo-shell">
+                  <img src="/assets/diebwes-logo.png" alt="">
+                </span>
+                <button class="orbit-node node-one" type="button" data-server-index="0" aria-label="Zum ersten Server springen"></button>
+                <button class="orbit-node node-two" type="button" data-server-index="1" aria-label="Zum zweiten Server springen"></button>
+                <button class="orbit-node node-three" type="button" data-server-index="2" aria-label="Zum dritten Server springen"></button>
+                <button class="orbit-node node-four" type="button" data-server-index="3" aria-label="Zum vierten Server springen"></button>
+              </div>
+
+              <div class="command-status-list" id="hero-server-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <a class="capybara-egg capybara-egg-one" href="https://www.google.com/search?tbm=isch&q=capybara" target="_blank" rel="noopener noreferrer" aria-label="Capybara-Bildersuche bei Google öffnen" title="Pssst … Capybara entdeckt">
+          <img src="/assets/capybara-1.png" alt="">
+        </a>
+      </section>
+
+      <section class="server-section" id="server" aria-labelledby="server-heading">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Live Server</span>
+            <h2 id="server-heading">Unsere Spielwelten</h2>
+            <p>Alle Server im Überblick</p>
+          </div>
+          <div class="server-summary" id="server-summary">Status wird geladen …</div>
+        </div>
+
+        <div class="server-carousel" aria-label="Game Server Karussell">
+          <div class="game-server-grid" id="game-server-grid" aria-live="polite" tabindex="0"></div>
+
+          <div class="server-carousel-controls">
+            <button class="carousel-arrow" id="server-prev" type="button" aria-label="Vorherige Serverkarte">←</button>
+            <label class="carousel-slider-wrap" for="server-slider">
+              <span>Server durchblättern</span>
+              <input id="server-slider" class="server-slider" type="range" min="0" max="1000" value="0" step="1" aria-label="Position im Serverkarussell">
+            </label>
+            <button class="carousel-arrow" id="server-next" type="button" aria-label="Nächste Serverkarte">→</button>
+          </div>
+        </div>
+
+        <a class="capybara-egg capybara-egg-two" href="https://www.google.com/search?tbm=isch&q=capybara" target="_blank" rel="noopener noreferrer" aria-label="Capybara-Bildersuche bei Google öffnen" title="Ein seltenes Server-Capybara">
+          <img src="/assets/capybara-2.png" alt="">
+        </a>
+      </section>
+
+
+      <section class="aura-leaderboard-section" id="aura-ranking" aria-labelledby="aura-ranking-heading">
+        <div class="section-heading aura-section-heading">
+          <div>
+            <span class="eyebrow">Aura Rangliste</span>
+            <h2 id="aura-ranking-heading">Wer strahlt am stärksten?</h2>
+            <p>Jeder Browser bekommt ein anonymes Profil. Ein Klick auf AURA bringt 100 Punkte.</p>
+          </div>
+          <button class="button button-secondary aura-refresh-button" id="aura-refresh" type="button">Rangliste aktualisieren</button>
+        </div>
+
+        <div class="aura-leaderboard-layout">
+          <article class="aura-own-profile" aria-labelledby="aura-own-profile-heading">
+            <span class="aura-profile-kicker">Dein Profil</span>
+            <h3 id="aura-own-profile-heading"><span id="aura-profile-name">Noch namenlos</span></h3>
+            <strong class="aura-profile-score" id="aura-profile-score">0</strong>
+            <span class="aura-profile-unit">AURA</span>
+            <p id="aura-profile-note">Klicke oben auf AURA, wähle beim ersten Mal einen Namen und sammle deine ersten Punkte.</p>
+          </article>
+
+          <div class="aura-ranking-panel">
+            <div class="aura-ranking-header">
+              <span>Platz</span>
+              <span>Name</span>
+              <span>Aura</span>
+            </div>
+            <ol class="aura-ranking-list" id="aura-leaderboard" aria-live="polite">
+              <li class="aura-ranking-loading">Rangliste wird geladen …</li>
+            </ol>
+            <p class="aura-ranking-status" id="aura-ranking-status" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <p class="aura-privacy-note">Gespeichert werden nur dein Anzeigename, eine zufällige Browser-ID und dein Aura-Stand. Löschst du die Websitedaten, beginnt dein Browser mit einem neuen Profil.</p>
+      </section>
+
+      <section class="discord-section" id="discord" aria-labelledby="discord-heading">
+        <div class="discord-invite-panel">
+          <img class="discord-panel-logo" src="/assets/discord-logo.jpg" alt="Discord Logo">
+          <span class="discord-kicker">Die Bwes auf Discord</span>
+          <h2 id="discord-heading">Dein Platz in der Crew.</h2>
+          <p>
+            Finde Mitspieler, erfahre von Events, erhalte Support und verpasse keine Server-News. Sprachkanäle, Rollen und gepflegtes Chaos inklusive.
+          </p>
+
+          <div class="discord-features">
+            <span>Server-News</span>
+            <span>Support</span>
+            <span>Events</span>
+          </div>
+
+          <a class="button discord-join-button" href="https://discord.gg/m3AnHkUTm2" target="_blank" rel="noopener noreferrer">
+            <img class="discord-button-logo" src="/assets/discord-logo.jpg" alt="" aria-hidden="true">
+            Discord beitreten
+          </a>
+        </div>
+
+        <div class="team-panel" id="team">
+          <div class="team-panel-heading">
+            <span class="eyebrow">Community Team</span>
+            <h2>Menschen hinter den Welten</h2>
+          </div>
+
+          <div class="role-group">
+            <div class="role-label owner-role"><span></span> Owner</div>
+            <div class="member-list">
+              <article class="member-card">
+                <span class="member-avatar"><img class="member-avatar-image" src="/assets/capybara-avatar-thegao.svg" alt="Capybara-Profilbild für Thegao_dan"></span>
+                <div><strong>Thegao_dan</strong><span>Owner</span><span class="member-realname">Finn</span></div>
+              </article>
+              <article class="member-card">
+                <span class="member-avatar"><img class="member-avatar-image" src="/assets/capybara-avatar-mcbleon.svg" alt="Capybara-Profilbild für McBleon"></span>
+                <div><strong>McBleon</strong><span>Owner</span><span class="member-realname">Leon</span></div>
+              </article>
+            </div>
+          </div>
+
+          <div class="role-group">
+            <div class="role-label admin-role"><span></span> Admins</div>
+            <div class="member-list">
+              <article class="member-card">
+                <span class="member-avatar"><img class="member-avatar-image" src="/assets/capybara-avatar-reanix.svg" alt="Capybara-Profilbild für reanix"></span>
+                <div><strong>reanix</strong><span>Admin</span><span class="member-realname">Ben</span></div>
+              </article>
+              <article class="member-card">
+                <span class="member-avatar"><img class="member-avatar-image" src="/assets/capybara-avatar-vanessa.svg" alt="Capybara-Profilbild für Vanessa_337"></span>
+                <div><strong>Vanessa_337</strong><span>Admin</span><span class="member-realname">Vanessa</span></div>
+              </article>
+              <article class="member-card">
+                <span class="member-avatar"><img class="member-avatar-image" src="/assets/capybara-avatar-sophelmedia.svg" alt="Capybara-Profilbild für sophelmedia"></span>
+                <div><strong>sophelmedia</strong><span>Admin</span><span class="member-realname">Sophie</span></div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="community-footer">
+      <a class="capybara-egg capybara-egg-three" href="https://www.google.com/search?tbm=isch&q=capybara" target="_blank" rel="noopener noreferrer" aria-label="Capybara-Bildersuche bei Google öffnen" title="Dieses Capybara bewacht den Footer">
+        <img src="/assets/capybara-3.png" alt="">
+      </a>
+      <a class="brand footer-brand brand-with-image" href="/">
+        <img class="brand-logo-image" src="/assets/diebwes-logo.png" alt="Die Bwes Server Logo">
+        <span class="brand-name">DIE BWES</span>
+      </a>
+      <p>Eine Community. Viele Welten. © <span id="current-year"></span> Die Bwes.</p>
+      <a href="/portal/">Control Center</a>
+    </footer>
+  </div>
+
+  <script src="/community-config.js"></script>
+  <script src="/community.js"></script>
+</body>
+</html>

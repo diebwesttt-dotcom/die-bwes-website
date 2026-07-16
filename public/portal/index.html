@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Control Center | Die Bwes</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="background-grid"></div>
+  <div class="noise"></div>
+
+  <div class="site-shell dashboard-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Die Bwes Startseite">
+        <span class="brand-mark">DB</span>
+        <span class="brand-name">DIE BWES</span>
+      </a>
+
+      <div class="topbar-actions">
+        <span class="user-pill" title="Über Cloudflare Access angemeldet">
+          <span class="user-avatar" id="user-avatar">•</span>
+          <span id="user-name">Verbunden</span>
+        </span>
+        <a class="button button-danger" href="/cdn-cgi/access/logout">Abmelden</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="dashboard-head">
+        <div>
+          <span class="eyebrow">Bwes Control Center</span>
+          <h1 class="page-title"><span class="gradient-text">Deine Welten.</span></h1>
+          <p class="dashboard-copy">Wähle einen Dienst aus und öffne das gewünschte Ziel.</p>
+        </div>
+        <span class="status-pill"><span class="status-dot"></span> Portal bereit</span>
+      </section>
+
+      <section class="toolbar" aria-label="Portal Werkzeuge">
+        <div class="search-box">
+          <span class="search-symbol" aria-hidden="true">⌕</span>
+          <input class="input" id="service-search" type="search" placeholder="Dienst suchen …" autocomplete="off">
+        </div>
+        <span class="status-pill" id="service-count">0 Dienste</span>
+      </section>
+
+      <section class="service-grid" id="service-grid" aria-label="Verfügbare Dienste"></section>
+      <div class="empty-state" id="empty-state">Keine passende Welt gefunden.</div>
+
+      <p class="footer-note">Die Bwes Portal / diebwes.com</p>
+    </main>
+  </div>
+
+  <script src="/portal/config.js"></script>
+  <script src="/portal/app.js"></script>
+</body>
+</html>
