@@ -20,7 +20,7 @@ window.COMMUNITY_CONFIG = {
     },
     {
       title: "Palworld",
-      shortTitle: "PAL",
+      shortTitle: "Palworld",
       game: "Palworld",
       description: "Gemeinsam Pals fangen, Basen errichten und eine Welt erkunden, in der selbst niedliche Kreaturen schweres Gerät bedienen.",
       image: "/assets/palworld.jpg",
@@ -37,7 +37,7 @@ window.COMMUNITY_CONFIG = {
       accent: "cyan"
     },
     {
-      title: "Minecraft VANILLA",
+      title: "VANILLA",
       shortTitle: "VANILLA",
       game: "Minecraft",
       description: "Gemeinsam bauen, handeln und erkunden. Eine ruhige Welt für große Projekte und kleine Blockhütten.",
@@ -45,7 +45,7 @@ window.COMMUNITY_CONFIG = {
       status: "checking",
       players: 0,
       maxPlayers: 67,
-      map: "Bwes Survival",
+      map: "Survival",
       address: "mc.diebwes.com",
       version: "26.2",
       versionLabel: "Minecraft-Version",
@@ -55,15 +55,15 @@ window.COMMUNITY_CONFIG = {
       accent: "green"
     },
     {
-      title: "Minecraft MODPACK",
-      shortTitle: "MOD",
+      title: "MODPACK",
+      shortTitle: "MODPAC",
       game: "Minecraft",
       description: "Entkommst du den Backrooms?",
       image: "/assets/backrooms.jpg",
       status: "checking",
       players: 0,
       maxPlayers: 67,
-      map: "Bwes",
+      map: "Modpack",
       address: "modpack.diebwes.com",
       version: "1.21.1",
       versionLabel: "Minecraft-Version",
