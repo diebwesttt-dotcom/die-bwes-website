@@ -59,7 +59,7 @@ window.COMMUNITY_CONFIG = {
       shortTitle: "MOD",
       game: "Minecraft",
       description: "Entkommst du den Backrooms?",
-      image: "/assets/atm.png",
+      image: "/assets/Backrooms.jpg",
       status: "checking",
       players: 0,
       maxPlayers: 67,
