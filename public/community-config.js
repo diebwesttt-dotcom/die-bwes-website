@@ -56,7 +56,7 @@ window.COMMUNITY_CONFIG = {
     },
     {
       title: "MODPACK",
-      shortTitle: "MODPAC",
+      shortTitle: "MODPACK",
       game: "Minecraft",
       description: "Entkommst du den Backrooms?",
       image: "/assets/backrooms.jpg",
