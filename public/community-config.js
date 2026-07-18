@@ -44,11 +44,11 @@ window.COMMUNITY_CONFIG = {
       players: 0,
       maxPlayers: 16,
       map: "Palpagos Islands",
-      address: "palworld.diebwes.com",
+      address: "Die Bwes",
       version: "",
       versionLabel: "Server-Version",
       statusEndpoint: "https://mcstatus.diebwes.com/api/server-status?server=palworld",
-      joinUrl: "",
+      joinUrl: "45.145.236.114:8211",
       tags: ["Survival", "Open World", "Community"],
       accent: "cyan"
     },
