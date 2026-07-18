@@ -45,6 +45,7 @@ window.COMMUNITY_CONFIG = {
       maxPlayers: 16,
       map: "Palpagos Islands",
       Community_Server: "Die Bwes",
+      IP::"192.168.0.163:8211",
       version: "",
       versionLabel: "Server-Version",
       statusEndpoint: "https://mcstatus.diebwes.com/api/server-status?server=palworld",
