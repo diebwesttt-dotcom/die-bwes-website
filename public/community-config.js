@@ -16,6 +16,22 @@ window.COMMUNITY_CONFIG = {
       statusEndpoint: "https://mcstatus.diebwes.com/api/server-status?server=ttt",
       joinUrl: "ttt.diebwes.com:27015",
       tags: ["TTT", "Custom Maps", "FastDL"],
+      accent: "red"
+    },
+    {
+      title: "Abiotic Factor",
+      shortTitle: "Abiotic Factor",
+      game: "Abiotic Factor",
+      description: "Entkommst du der Facility",
+      image: "/assets/ttt.jpg",
+      status: "checking",
+      players: 0,
+      maxPlayers: 32,
+      map: "Cascade",
+      address: "Die Bwes",
+      statusEndpoint: "https://mcstatus.diebwes.com/api/server-status?server=abiotic",
+      joinUrl: "ttt.diebwes.com:7777",
+      tags: ["Entkommen","Survial","Monster"],
       accent: "violet"
     },
     {
