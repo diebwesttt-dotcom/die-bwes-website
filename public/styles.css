@@ -3547,3 +3547,575 @@ html {
     scroll-padding-bottom: 18px;
   }
 }
+
+
+/* Version 9: themed Aura podium and complete ranking */
+.aura-ranking-panel {
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 50% 7%, rgba(155, 108, 255, 0.11), transparent 34%),
+    rgba(5, 8, 18, 0.64);
+}
+
+.aura-podium-section,
+.aura-all-ranking {
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 20px;
+  background: rgba(7, 10, 23, 0.58);
+}
+
+.aura-podium-section {
+  position: relative;
+  overflow: hidden;
+  padding: 20px 20px 0;
+}
+
+.aura-podium-section::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.018), transparent),
+    radial-gradient(circle at 50% 105%, rgba(66, 232, 255, 0.12), transparent 44%);
+  content: "";
+  pointer-events: none;
+}
+
+.aura-podium-heading-row,
+.aura-all-ranking-title-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.aura-podium-kicker {
+  color: #a99aff;
+  font-size: 0.64rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.17em;
+}
+
+.aura-podium-heading-row h3,
+.aura-all-ranking-title-row h3 {
+  margin: 4px 0 0;
+  font-size: 1.05rem;
+  letter-spacing: -0.025em;
+}
+
+.aura-podium-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid rgba(82, 242, 164, 0.18);
+  border-radius: 999px;
+  color: #bfffe0;
+  background: rgba(82, 242, 164, 0.055);
+  font-size: 0.62rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.aura-podium-live span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+
+.aura-podium {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 278px;
+  align-items: end;
+  grid-template-columns: 1fr 1.14fr 1fr;
+  gap: 8px;
+  padding-top: 24px;
+}
+
+.aura-podium > .aura-ranking-loading {
+  grid-column: 1 / -1;
+  align-self: center;
+}
+
+.aura-podium-place {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 18px;
+  text-align: center;
+}
+
+.aura-podium-place-1 { grid-column: 2; grid-row: 1; }
+.aura-podium-place-2 { grid-column: 1; grid-row: 1; }
+.aura-podium-place-3 { grid-column: 3; grid-row: 1; }
+
+.aura-podium-crown {
+  position: absolute;
+  top: 0;
+  color: var(--podium-accent);
+  font-size: 1rem;
+  filter: drop-shadow(0 0 8px var(--podium-glow));
+}
+
+.aura-podium-avatar {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border: 2px solid color-mix(in srgb, var(--podium-accent) 75%, white 10%);
+  border-radius: 18px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.22), transparent 24%),
+    color-mix(in srgb, var(--podium-accent) 28%, #11162b);
+  box-shadow: 0 0 24px var(--podium-glow), inset 0 0 16px rgba(255, 255, 255, 0.06);
+  font-size: 1.25rem;
+  font-weight: 950;
+}
+
+.aura-podium-place-1 .aura-podium-avatar {
+  width: 66px;
+  height: 66px;
+  border-radius: 21px;
+  font-size: 1.5rem;
+}
+
+.aura-podium-name {
+  width: 100%;
+  margin-top: 10px;
+  overflow: hidden;
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.aura-podium-place-1 .aura-podium-name {
+  font-size: 0.9rem;
+}
+
+.aura-podium-score {
+  margin: 5px 0 9px;
+  color: color-mix(in srgb, var(--podium-accent) 48%, white);
+  font-size: 0.76rem;
+  font-weight: 950;
+  font-variant-numeric: tabular-nums;
+}
+
+.aura-podium-score small {
+  color: #77809b;
+  font-size: 0.48rem;
+  letter-spacing: 0.05em;
+}
+
+.aura-podium-block {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: var(--podium-height);
+  place-items: start center;
+  overflow: hidden;
+  padding-top: 13px;
+  border: 1px solid color-mix(in srgb, var(--podium-accent) 30%, transparent);
+  border-bottom: 0;
+  border-radius: 14px 14px 0 0;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--podium-accent) 15%, #12162b), rgba(9, 12, 25, 0.96));
+  box-shadow: inset 0 14px 34px color-mix(in srgb, var(--podium-accent) 7%, transparent);
+}
+
+.aura-podium-block::after {
+  position: absolute;
+  right: 8px;
+  bottom: -15px;
+  left: 8px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--podium-glow);
+  filter: blur(19px);
+  content: "";
+}
+
+.aura-podium-rank {
+  position: relative;
+  z-index: 1;
+  color: color-mix(in srgb, var(--podium-accent) 62%, white);
+  font-size: 1.8rem;
+  font-weight: 950;
+  line-height: 1;
+  text-shadow: 0 0 17px var(--podium-glow);
+}
+
+.aura-podium-place-1 {
+  --podium-accent: #ffc65c;
+  --podium-glow: rgba(255, 198, 92, 0.3);
+  --podium-height: 104px;
+}
+
+.aura-podium-place-2 {
+  --podium-accent: #cfdcf0;
+  --podium-glow: rgba(207, 220, 240, 0.2);
+  --podium-height: 77px;
+}
+
+.aura-podium-place-3 {
+  --podium-accent: #c98458;
+  --podium-glow: rgba(201, 132, 88, 0.24);
+  --podium-height: 63px;
+}
+
+.aura-podium-place.is-current-player .aura-podium-avatar,
+.aura-podium-place.is-current-player .aura-podium-block {
+  box-shadow: 0 0 0 2px rgba(82, 242, 164, 0.48), 0 0 26px rgba(82, 242, 164, 0.17);
+}
+
+.aura-all-ranking {
+  padding: 16px;
+}
+
+.aura-all-ranking-title-row {
+  margin-bottom: 12px;
+}
+
+.aura-all-ranking-title-row span {
+  color: #747c98;
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+.aura-ranking-list {
+  max-height: 440px;
+  overflow-y: auto;
+  padding-right: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 108, 255, 0.48) transparent;
+}
+
+.aura-ranking-list::-webkit-scrollbar { width: 6px; }
+.aura-ranking-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(155, 108, 255, 0.65), rgba(66, 232, 255, 0.48));
+}
+
+.aura-ranking-row:nth-child(1),
+.aura-ranking-row:nth-child(2),
+.aura-ranking-row:nth-child(3) {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.aura-ranking-row.is-top-1 {
+  border-color: rgba(255, 198, 92, 0.28);
+  background: rgba(255, 198, 92, 0.045);
+}
+
+.aura-ranking-row.is-top-2 {
+  border-color: rgba(207, 220, 240, 0.2);
+}
+
+.aura-ranking-row.is-top-3 {
+  border-color: rgba(201, 132, 88, 0.22);
+}
+
+@media (max-width: 620px) {
+  .aura-ranking-panel {
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .aura-podium-section {
+    padding: 16px 10px 0;
+  }
+
+  .aura-podium {
+    min-height: 245px;
+    gap: 5px;
+  }
+
+  .aura-podium-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    font-size: 1rem;
+  }
+
+  .aura-podium-place-1 .aura-podium-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 17px;
+    font-size: 1.2rem;
+  }
+
+  .aura-podium-name {
+    font-size: 0.67rem;
+  }
+
+  .aura-podium-place-1 .aura-podium-name {
+    font-size: 0.75rem;
+  }
+
+  .aura-podium-score {
+    font-size: 0.64rem;
+  }
+
+  .aura-podium-place-1 { --podium-height: 91px; }
+  .aura-podium-place-2 { --podium-height: 68px; }
+  .aura-podium-place-3 { --podium-height: 56px; }
+
+  .aura-all-ranking {
+    padding: 10px;
+  }
+
+  .aura-ranking-list {
+    max-height: 390px;
+  }
+}
+
+/* Version 10: Aura badge system */
+.aura-profile-clicks {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 9px;
+  padding: 6px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: #9ca5c4;
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+.aura-profile-badges,
+.aura-rank-badges,
+.aura-podium-badges {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.aura-profile-badges {
+  margin-top: 18px;
+}
+
+.aura-rank-identity {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.aura-rank-badges {
+  gap: 4px;
+}
+
+.aura-podium-badges {
+  min-height: 24px;
+  justify-content: center;
+  margin: 0 0 8px;
+}
+
+.aura-badge {
+  --badge-accent: #8b93ad;
+  --badge-glow: rgba(139, 147, 173, 0.16);
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border: 1px solid color-mix(in srgb, var(--badge-accent) 34%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--badge-accent) 55%, white);
+  background: color-mix(in srgb, var(--badge-accent) 9%, rgba(8, 11, 24, 0.9));
+  box-shadow: inset 0 0 13px var(--badge-glow), 0 0 12px var(--badge-glow);
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.aura-badge.is-compact {
+  gap: 4px;
+  padding: 4px 6px;
+  font-size: 0.53rem;
+}
+
+.aura-badge-icon { font-size: 0.9em; }
+.aura-badge-more { --badge-accent: #9b6cff; }
+.aura-badge-gold { --badge-accent: #ffc65c; --badge-glow: rgba(255, 198, 92, 0.18); }
+.aura-badge-silver { --badge-accent: #d6e1f2; --badge-glow: rgba(214, 225, 242, 0.14); }
+.aura-badge-bronze { --badge-accent: #d58c5b; --badge-glow: rgba(213, 140, 91, 0.17); }
+.aura-badge-cyan { --badge-accent: #42e8ff; --badge-glow: rgba(66, 232, 255, 0.17); }
+.aura-badge-green { --badge-accent: #52f2a4; --badge-glow: rgba(82, 242, 164, 0.17); }
+.aura-badge-orange { --badge-accent: #ff9d4d; --badge-glow: rgba(255, 157, 77, 0.18); }
+.aura-badge-violet { --badge-accent: #ad7cff; --badge-glow: rgba(173, 124, 255, 0.2); }
+.aura-badge-red { --badge-accent: #ff667d; --badge-glow: rgba(255, 102, 125, 0.19); }
+.aura-badge-blue { --badge-accent: #6f9cff; --badge-glow: rgba(111, 156, 255, 0.17); }
+.aura-badge-pink { --badge-accent: #ff6eb3; --badge-glow: rgba(255, 110, 179, 0.17); }
+.aura-badge-gray { --badge-accent: #a3abc3; --badge-glow: rgba(163, 171, 195, 0.12); }
+.aura-badge-cosmic {
+  --badge-accent: #d991ff;
+  --badge-glow: rgba(217, 145, 255, 0.2);
+  background: linear-gradient(110deg, rgba(155, 108, 255, 0.14), rgba(66, 232, 255, 0.11), rgba(255, 93, 168, 0.12));
+}
+
+/* Version 11: Millionen-Ränge und exklusiver 67-Badge */
+.aura-badge-diamond {
+  --badge-accent: #55e6ff;
+  --badge-glow: rgba(85, 230, 255, 0.23);
+  background: linear-gradient(110deg, rgba(66, 232, 255, 0.16), rgba(111, 156, 255, 0.1));
+}
+.aura-badge-emerald {
+  --badge-accent: #48f39b;
+  --badge-glow: rgba(72, 243, 155, 0.23);
+  background: linear-gradient(110deg, rgba(32, 202, 125, 0.16), rgba(82, 242, 164, 0.09));
+}
+.aura-badge-sapphire {
+  --badge-accent: #6f9cff;
+  --badge-glow: rgba(111, 156, 255, 0.24);
+  background: linear-gradient(110deg, rgba(72, 105, 255, 0.17), rgba(66, 232, 255, 0.08));
+}
+.aura-badge-magenta {
+  --badge-accent: #ef69ff;
+  --badge-glow: rgba(239, 105, 255, 0.25);
+  background: linear-gradient(110deg, rgba(196, 70, 255, 0.18), rgba(255, 93, 168, 0.1));
+}
+.aura-badge-radiant {
+  --badge-accent: #ffe46d;
+  --badge-glow: rgba(255, 228, 109, 0.28);
+  background: linear-gradient(110deg, rgba(255, 198, 92, 0.18), rgba(217, 145, 255, 0.14), rgba(66, 232, 255, 0.1));
+  animation: auraMillionPulse 2.4s ease-in-out infinite;
+}
+.aura-badge-sixtyseven {
+  --badge-accent: #c275ff;
+  --badge-glow: rgba(194, 117, 255, 0.38);
+  border-width: 1.5px;
+  color: #f2dcff;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.13), transparent 24%),
+    linear-gradient(120deg, rgba(83, 25, 128, 0.95), rgba(31, 12, 61, 0.96));
+  box-shadow: inset 0 0 17px rgba(194, 117, 255, 0.2), 0 0 22px rgba(194, 117, 255, 0.3);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  animation: aura67Pulse 1.35s ease-in-out infinite alternate;
+}
+.aura-badge-sixtyseven.is-compact {
+  padding: 5px 8px;
+  font-size: 0.62rem;
+}
+
+@keyframes auraMillionPulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.18); }
+}
+
+@keyframes aura67Pulse {
+  from { transform: translateY(0) scale(1); box-shadow: inset 0 0 17px rgba(194, 117, 255, 0.2), 0 0 16px rgba(194, 117, 255, 0.22); }
+  to { transform: translateY(-1px) scale(1.035); box-shadow: inset 0 0 22px rgba(194, 117, 255, 0.28), 0 0 30px rgba(194, 117, 255, 0.44); }
+}
+
+.aura-badge-unlock {
+  --badge-accent: #ffc65c;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1200;
+  display: grid;
+  min-width: min(360px, calc(100vw - 34px));
+  place-items: center;
+  padding: 24px 28px;
+  border: 1px solid color-mix(in srgb, var(--badge-accent) 42%, transparent);
+  border-radius: 25px;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--badge-accent) 17%, transparent), transparent 48%),
+    rgba(8, 11, 24, 0.96);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.54), 0 0 65px color-mix(in srgb, var(--badge-accent) 20%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  transform: translate(-50%, -43%) scale(0.8);
+  transition: opacity 220ms ease, transform 280ms cubic-bezier(0.2, 0.85, 0.25, 1);
+  backdrop-filter: blur(20px);
+}
+
+.aura-badge-unlock.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.aura-badge-unlock-kicker {
+  color: color-mix(in srgb, var(--badge-accent) 60%, white);
+  font-size: 0.65rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.aura-badge-unlock-icon {
+  margin: 14px 0 8px;
+  font-size: 3.4rem;
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--badge-accent) 55%, transparent));
+}
+
+.aura-badge-unlock strong {
+  font-size: 1.5rem;
+  letter-spacing: -0.035em;
+}
+
+.aura-badge-unlock > span:last-child {
+  max-width: 270px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.capybara-egg.is-found {
+  border-color: rgba(82, 242, 164, 0.5);
+  opacity: 0.72;
+  box-shadow: 0 0 22px rgba(82, 242, 164, 0.16);
+}
+
+@media (max-width: 620px) {
+  .aura-ranking-header,
+  .aura-ranking-row {
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+
+  .aura-ranking-row {
+    min-height: 61px;
+    padding: 9px 10px;
+  }
+
+  .aura-rank-badges .aura-badge-label {
+    display: none;
+  }
+
+  .aura-rank-badges .aura-badge {
+    min-width: 22px;
+    justify-content: center;
+  }
+
+  .aura-podium-badges {
+    gap: 3px;
+  }
+
+  .aura-podium-badges .aura-badge-label {
+    display: none;
+  }
+
+  .aura-badge-unlock {
+    padding: 21px;
+  }
+}

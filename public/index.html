@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#070912">
   <title>Die Bwes | Community</title>
   <link rel="icon" type="image/png" href="/assets/diebwes-logo.png">
-  <link rel="stylesheet" href="/styles.css?v=8">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="home-page">
   <div class="background-grid"></div>
@@ -21,6 +21,13 @@
     </div>
   </div>
   <audio id="aura-sound" src="/assets/aura.mp3" preload="auto"></audio>
+
+  <div class="aura-badge-unlock" id="aura-badge-unlock" role="status" aria-live="polite" aria-atomic="true">
+    <span class="aura-badge-unlock-kicker">Neuer Badge freigeschaltet</span>
+    <span class="aura-badge-unlock-icon" id="aura-badge-unlock-icon">🏆</span>
+    <strong id="aura-badge-unlock-name">Aura Badge</strong>
+    <span id="aura-badge-unlock-description">Ein neuer Erfolg gehört dir.</span>
+  </div>
 
   <dialog class="aura-name-dialog" id="aura-name-dialog" aria-labelledby="aura-name-title">
     <form class="aura-name-form" id="aura-name-form" method="dialog" novalidate>
@@ -179,18 +186,39 @@
             <h3 id="aura-own-profile-heading"><span id="aura-profile-name">Noch namenlos</span></h3>
             <strong class="aura-profile-score" id="aura-profile-score">0</strong>
             <span class="aura-profile-unit">AURA</span>
+            <span class="aura-profile-clicks" id="aura-profile-clicks">0 Klicks</span>
+            <div class="aura-profile-badges" id="aura-profile-badges" aria-label="Deine freigeschalteten Badges"></div>
             <p id="aura-profile-note">Klicke oben auf AURA, wähle beim ersten Mal einen Namen und sammle deine ersten Punkte.</p>
           </article>
 
           <div class="aura-ranking-panel">
-            <div class="aura-ranking-header">
-              <span>Platz</span>
-              <span>Name</span>
-              <span>Aura</span>
-            </div>
-            <ol class="aura-ranking-list" id="aura-leaderboard" aria-live="polite">
-              <li class="aura-ranking-loading">Rangliste wird geladen …</li>
-            </ol>
+            <section class="aura-podium-section" aria-labelledby="aura-podium-heading">
+              <div class="aura-podium-heading-row">
+                <div>
+                  <span class="aura-podium-kicker">Hall of Aura</span>
+                  <h3 id="aura-podium-heading">Das Gewinnerpodest</h3>
+                </div>
+                <span class="aura-podium-live"><span></span> Live</span>
+              </div>
+              <div class="aura-podium" id="aura-podium" aria-live="polite">
+                <p class="aura-ranking-loading">Podest wird geladen …</p>
+              </div>
+            </section>
+
+            <section class="aura-all-ranking" aria-labelledby="aura-all-ranking-heading">
+              <div class="aura-all-ranking-title-row">
+                <h3 id="aura-all-ranking-heading">Alle Plätze</h3>
+                <span id="aura-player-count">0 Spieler</span>
+              </div>
+              <div class="aura-ranking-header">
+                <span>Platz</span>
+                <span>Name</span>
+                <span>Aura</span>
+              </div>
+              <ol class="aura-ranking-list" id="aura-leaderboard" aria-live="polite">
+                <li class="aura-ranking-loading">Rangliste wird geladen …</li>
+              </ol>
+            </section>
             <p class="aura-ranking-status" id="aura-ranking-status" role="status" aria-live="polite"></p>
           </div>
         </div>
@@ -273,7 +301,7 @@
     </footer>
   </div>
 
-  <script src="/community-config.js?v=11"></script>
-  <script src="/community.js?v=8"></script>
+  <script src="/community-config.js"></script>
+  <script src="/community.js"></script>
 </body>
 </html>

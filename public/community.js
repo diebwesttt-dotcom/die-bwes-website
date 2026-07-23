@@ -18,7 +18,8 @@
   const auraStorageKeys = {
     playerId: "bwesAuraPlayerId",
     playerName: "bwesAuraPlayerName",
-    score: "bwesAuraScore"
+    score: "bwesAuraScore",
+    capybaras: "bwesFoundCapybaras"
   };
 
   const auraState = {
@@ -30,7 +31,10 @@
     processingAwards: false,
     requestingName: false,
     nameResolver: null,
-    refreshTimer: 0
+    refreshTimer: 0,
+    clicks: 0,
+    badges: [],
+    foundCapybaras: new Set()
   };
 
   function textElement(tag, className, text) {
@@ -394,11 +398,14 @@
       auraState.playerName = localStorage.getItem(auraStorageKeys.playerName) || "";
       auraState.score = Math.max(0, Number(localStorage.getItem(auraStorageKeys.score)) || 0);
       auraState.confirmedScore = auraState.score;
+      const storedCapybaras = JSON.parse(localStorage.getItem(auraStorageKeys.capybaras) || "[]");
+      auraState.foundCapybaras = new Set(Array.isArray(storedCapybaras) ? storedCapybaras : []);
     } catch (error) {
       auraState.playerId = "";
       auraState.playerName = "";
       auraState.score = 0;
       auraState.confirmedScore = 0;
+      auraState.foundCapybaras = new Set();
     }
   }
 
@@ -407,6 +414,7 @@
       localStorage.setItem(auraStorageKeys.playerId, auraState.playerId);
       localStorage.setItem(auraStorageKeys.playerName, auraState.playerName);
       localStorage.setItem(auraStorageKeys.score, String(auraState.score));
+      localStorage.setItem(auraStorageKeys.capybaras, JSON.stringify([...auraState.foundCapybaras]));
     } catch (error) {
       // The leaderboard still works for this page view if storage is unavailable.
     }
@@ -441,6 +449,71 @@
     return new Intl.NumberFormat("de-DE").format(Math.max(0, Number(value) || 0));
   }
 
+  function badgeIds(badges) {
+    return (Array.isArray(badges) ? badges : []).map(function (badge) { return badge && badge.id; }).filter(Boolean);
+  }
+
+  function createBadgeChip(badge, compact) {
+    const chip = document.createElement("span");
+    chip.className = `aura-badge aura-badge-${badge.tone || "gray"}${compact ? " is-compact" : ""}`;
+    chip.title = badge.description || badge.label || "Aura Badge";
+    chip.setAttribute("aria-label", `${badge.display || badge.label || "Badge"}: ${badge.description || ""}`);
+    if (badge.display) {
+      chip.appendChild(textElement("span", "aura-badge-label", badge.display));
+    } else {
+      chip.appendChild(textElement("span", "aura-badge-icon", badge.icon || "✦"));
+      chip.appendChild(textElement("span", "aura-badge-label", badge.label || "Badge"));
+    }
+    return chip;
+  }
+
+  function renderBadgeStrip(container, badges, limit, compact) {
+    if (!container) return;
+    container.replaceChildren();
+    const list = Array.isArray(badges) ? badges.slice(0, limit || badges.length) : [];
+    list.forEach(function (badge) { container.appendChild(createBadgeChip(badge, compact)); });
+    if (Array.isArray(badges) && badges.length > list.length) {
+      const more = textElement("span", "aura-badge aura-badge-more is-compact", `+${badges.length - list.length}`);
+      more.title = badges.slice(list.length).map(function (badge) { return badge.label; }).join(", ");
+      container.appendChild(more);
+    }
+  }
+
+  function showBadgeUnlock(badge) {
+    if (!badge) return;
+    const popup = document.getElementById("aura-badge-unlock");
+    const icon = document.getElementById("aura-badge-unlock-icon");
+    const name = document.getElementById("aura-badge-unlock-name");
+    const description = document.getElementById("aura-badge-unlock-description");
+    if (!popup) return;
+    if (icon) icon.textContent = badge.icon || "🏆";
+    if (name) name.textContent = badge.label || "Neuer Badge";
+    if (description) description.textContent = badge.description || "Badge freigeschaltet.";
+    popup.className = `aura-badge-unlock aura-badge-${badge.tone || "gray"} is-visible`;
+    window.clearTimeout(showBadgeUnlock.timer);
+    showBadgeUnlock.timer = window.setTimeout(function () { popup.classList.remove("is-visible"); }, 3600);
+  }
+
+  function applyPlayerPayload(player, showUnlocks) {
+    if (!player) return;
+    const previous = new Set(badgeIds(auraState.badges));
+    auraState.playerName = player.name || auraState.playerName;
+    auraState.confirmedScore = Math.max(0, Number(player.score) || 0);
+    auraState.score = auraState.confirmedScore + (auraState.pendingAwards * 100);
+    auraState.clicks = Math.max(0, Number(player.clicks) || 0);
+    auraState.badges = Array.isArray(player.badges) ? player.badges : [];
+    if (showUnlocks) {
+      const currentIds = new Set(badgeIds(auraState.badges));
+      const leavingExclusive67 = previous.has("special_67") && !currentIds.has("special_67");
+      const unlocked = auraState.badges.filter(function (badge) { return badge && !previous.has(badge.id); });
+      // Wenn der exklusive 67-Badge beim nächsten Klick verschwindet, sind die
+      // normalen Badges nur wieder sichtbar und nicht erneut freigeschaltet.
+      if (!leavingExclusive67 && unlocked.length) showBadgeUnlock(unlocked[unlocked.length - 1]);
+    }
+    writeAuraState();
+    updateAuraProfileUI();
+  }
+
   function setAuraStatus(message, isError) {
     const status = document.getElementById("aura-ranking-status");
     if (!status) return;
@@ -453,10 +526,14 @@
     const profileName = document.getElementById("aura-profile-name");
     const profileScore = document.getElementById("aura-profile-score");
     const profileNote = document.getElementById("aura-profile-note");
+    const profileBadges = document.getElementById("aura-profile-badges");
+    const profileClicks = document.getElementById("aura-profile-clicks");
 
     if (buttonScore) buttonScore.textContent = formatAura(auraState.score);
     if (profileName) profileName.textContent = auraState.playerName || "Noch namenlos";
     if (profileScore) profileScore.textContent = formatAura(auraState.score);
+    if (profileClicks) profileClicks.textContent = `${formatAura(auraState.clicks)} Klick${auraState.clicks === 1 ? "" : "s"}`;
+    renderBadgeStrip(profileBadges, auraState.badges, 8, false);
     if (profileNote) {
       profileNote.textContent = auraState.playerName
         ? "Dein Stand ist mit diesem Browser verknüpft und wird mit der Rangliste synchronisiert."
@@ -488,12 +565,58 @@
     return payload;
   }
 
-  function renderAuraLeaderboard(players) {
-    const list = document.getElementById("aura-leaderboard");
-    if (!list) return;
-    list.replaceChildren();
+  function isCurrentAuraPlayer(player) {
+    return player && (
+      player.isCurrent === true
+      || (auraState.playerName && player.name === auraState.playerName && Number(player.score) === Number(auraState.score))
+    );
+  }
 
-    if (!Array.isArray(players) || players.length === 0) {
+  function createPodiumPlace(player, rank) {
+    const place = document.createElement("article");
+    place.className = `aura-podium-place aura-podium-place-${rank}`;
+    place.setAttribute("aria-label", player ? `Platz ${rank}: ${player.name} mit ${formatAura(player.score)} Aura` : `Platz ${rank} ist noch frei`);
+    if (player && isCurrentAuraPlayer(player)) place.classList.add("is-current-player");
+
+    const crown = textElement("span", "aura-podium-crown", rank === 1 ? "♛" : rank === 2 ? "◇" : "◆");
+    const avatar = textElement("span", "aura-podium-avatar", player ? String(player.name || "?").trim().charAt(0).toUpperCase() : "?");
+    const name = textElement("strong", "aura-podium-name", player ? player.name : "Noch frei");
+    const score = textElement("span", "aura-podium-score", player ? formatAura(player.score) : "0");
+    score.appendChild(textElement("small", "", " AURA"));
+    const badges = document.createElement("div");
+    badges.className = "aura-podium-badges";
+    renderBadgeStrip(badges, player ? player.badges : [], 3, true);
+
+    const block = document.createElement("div");
+    block.className = "aura-podium-block";
+    block.appendChild(textElement("span", "aura-podium-rank", String(rank)));
+
+    place.appendChild(crown);
+    place.appendChild(avatar);
+    place.appendChild(name);
+    place.appendChild(score);
+    place.appendChild(badges);
+    place.appendChild(block);
+    return place;
+  }
+
+  function renderAuraLeaderboard(players) {
+    const podium = document.getElementById("aura-podium");
+    const list = document.getElementById("aura-leaderboard");
+    const playerCount = document.getElementById("aura-player-count");
+    if (!list || !podium) return;
+
+    const normalizedPlayers = Array.isArray(players) ? players : [];
+    list.replaceChildren();
+    podium.replaceChildren();
+    if (playerCount) playerCount.textContent = `${normalizedPlayers.length} ${normalizedPlayers.length === 1 ? "Spieler" : "Spieler"}`;
+
+    if (normalizedPlayers.length === 0) {
+      const emptyPodium = document.createElement("p");
+      emptyPodium.className = "aura-ranking-loading";
+      emptyPodium.textContent = "Das Podest wartet auf seinen ersten Aura-Champion.";
+      podium.appendChild(emptyPodium);
+
       const empty = document.createElement("li");
       empty.className = "aura-ranking-loading";
       empty.textContent = "Noch keine Aura-Helden. Der erste Platz wartet.";
@@ -501,19 +624,29 @@
       return;
     }
 
-    players.slice(0, 10).forEach(function (player, index) {
+    const podiumOrder = [2, 1, 3];
+    podiumOrder.forEach(function (rank) {
+      podium.appendChild(createPodiumPlace(normalizedPlayers[rank - 1] || null, rank));
+    });
+
+    normalizedPlayers.forEach(function (player, index) {
       const item = document.createElement("li");
       item.className = "aura-ranking-row";
-      if (player.isCurrent === true || (auraState.playerName && player.name === auraState.playerName && player.score === auraState.score)) {
-        item.classList.add("is-current-player");
-      }
+      if (index < 3) item.classList.add(`is-top-${index + 1}`);
+      if (isCurrentAuraPlayer(player)) item.classList.add("is-current-player");
 
       const rank = textElement("span", "aura-rank-number", String(index + 1).padStart(2, "0"));
-      const name = textElement("strong", "aura-rank-name", player.name || "Unbekannt");
+      const identity = document.createElement("div");
+      identity.className = "aura-rank-identity";
+      identity.appendChild(textElement("strong", "aura-rank-name", player.name || "Unbekannt"));
+      const badges = document.createElement("div");
+      badges.className = "aura-rank-badges";
+      renderBadgeStrip(badges, player.badges || [], 5, true);
+      identity.appendChild(badges);
       const score = textElement("span", "aura-rank-score", formatAura(player.score));
       score.appendChild(textElement("small", "", " AURA"));
       item.appendChild(rank);
-      item.appendChild(name);
+      item.appendChild(identity);
       item.appendChild(score);
       list.appendChild(item);
     });
@@ -526,13 +659,7 @@
     try {
       const query = auraState.playerId ? `?playerId=${encodeURIComponent(auraState.playerId)}` : "";
       const payload = await auraApi(`/api/aura${query}`);
-      if (payload.player) {
-        auraState.playerName = payload.player.name || auraState.playerName;
-        auraState.confirmedScore = Math.max(0, Number(payload.player.score) || 0);
-        auraState.score = auraState.confirmedScore + (auraState.pendingAwards * 100);
-        writeAuraState();
-        updateAuraProfileUI();
-      }
+      if (payload.player) applyPlayerPayload(payload.player, false);
       renderAuraLeaderboard(payload.leaderboard || []);
       setAuraStatus(showMessage ? "Rangliste aktualisiert." : "", false);
     } catch (error) {
@@ -655,11 +782,7 @@
         });
 
         auraState.pendingAwards -= 1;
-        auraState.playerName = payload.player.name;
-        auraState.confirmedScore = Math.max(0, Number(payload.player.score) || 0);
-        auraState.score = auraState.confirmedScore + (auraState.pendingAwards * 100);
-        writeAuraState();
-        updateAuraProfileUI();
+        applyPlayerPayload(payload.player, true);
         renderAuraLeaderboard(payload.leaderboard || []);
 
         if (auraState.pendingAwards > 0) {
@@ -735,6 +858,35 @@
     processAuraQueue();
   }
 
+  async function unlockCapybaraHunter() {
+    if (!auraState.playerId || !auraState.playerName || auraState.foundCapybaras.size < 3) return;
+    if (badgeIds(auraState.badges).includes("capybara_hunter")) return;
+    try {
+      const payload = await auraApi("/api/aura", {
+        method: "POST",
+        body: JSON.stringify({ action: "unlockBadge", playerId: auraState.playerId, badgeId: "capybara_hunter" })
+      });
+      applyPlayerPayload(payload.player, true);
+      renderAuraLeaderboard(payload.leaderboard || []);
+    } catch (error) {
+      // Badge wird beim nächsten Fund oder Seitenaufruf erneut versucht.
+    }
+  }
+
+  function setupCapybaraBadges() {
+    const eggs = Array.from(document.querySelectorAll(".capybara-egg"));
+    eggs.forEach(function (egg, index) {
+      const key = egg.className.match(/capybara-egg-(one|two|three)/)?.[1] || String(index + 1);
+      if (auraState.foundCapybaras.has(key)) egg.classList.add("is-found");
+      egg.addEventListener("click", function () {
+        auraState.foundCapybaras.add(key);
+        egg.classList.add("is-found");
+        writeAuraState();
+        unlockCapybaraHunter();
+      });
+    });
+  }
+
   function setupAuraEffect() {
     const trigger = document.getElementById("aura-trigger");
     const refreshButton = document.getElementById("aura-refresh");
@@ -743,9 +895,10 @@
     readAuraState();
     updateAuraProfileUI();
     setupAuraNameDialog();
+    setupCapybaraBadges();
     trigger.addEventListener("click", awardAura);
     refreshButton?.addEventListener("click", function () { refreshAuraLeaderboard(true); });
-    refreshAuraLeaderboard(false);
+    refreshAuraLeaderboard(false).then(unlockCapybaraHunter);
     window.setInterval(function () { refreshAuraLeaderboard(false); }, 30000);
   }
 
