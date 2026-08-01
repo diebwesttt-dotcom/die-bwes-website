@@ -6,7 +6,7 @@ window.COMMUNITY_CONFIG = {
       title: "Conan Exiles Enhanced",
       shortTitle: "Conan Exiles",
       game: "Conan Exiles Enhanced",
-      description: "Eine brutale offene Welt voller Ruinen, Thralls und Bauprojekte, die garantiert viel kleiner geplant waren. Mit Steam-Workshop-Mods.",
+      description: "Eine brutale offene Welt voller Ruinen, Thralls und Bauprojekten, die garantiert viel kleiner geplant waren.",
       image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/440900/header.jpg",
       status: "checking",
       players: 0,
