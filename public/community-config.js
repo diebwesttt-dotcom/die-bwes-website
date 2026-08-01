@@ -39,7 +39,7 @@ window.COMMUNITY_CONFIG = {
       shortTitle: "Palworld",
       game: "Palworld",
       description: "Gemeinsam Pals fangen, Basen errichten und eine Welt erkunden, in der selbst niedliche Kreaturen schweres Gerät bedienen.",
-      image: "/assets/palworld.jpg",
+      image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/header.jpg",
       status: "checking",
       players: 0,
       maxPlayers: 16,
