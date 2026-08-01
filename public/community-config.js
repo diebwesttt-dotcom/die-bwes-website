@@ -53,6 +53,24 @@ window.COMMUNITY_CONFIG = {
       accent: "cyan"
     },
     {
+      title: "Valheim",
+      shortTitle: "Valheim",
+      game: "Valheim",
+      description: "Gemeinsam durch Nebel, Wälder und Bosskämpfe ziehen, Langhäuser bauen und mit BepInEx-Mods das Wikingerleben verfeinern.",
+      image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/892970/header.jpg",
+      status: "checking",
+      players: 0,
+      maxPlayers: 10,
+      map: "DieBwes",
+      address: "valheim.diebwes.com:27018",
+      version: "",
+      versionLabel: "Server-Version",
+      statusEndpoint: "https://mcstatus.diebwes.com/api/server-status?server=valheim",
+      joinUrl: "steam://connect/valheim.diebwes.com:27018",
+      tags: ["Survival", "Vikings", "Modded", "BepInEx"],
+      accent: "amber"
+    },
+    {
       title: "VANILLA",
       shortTitle: "VANILLA",
       game: "Minecraft",
