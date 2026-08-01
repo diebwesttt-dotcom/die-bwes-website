@@ -23,7 +23,7 @@ window.COMMUNITY_CONFIG = {
       shortTitle: "Abiotic Factor",
       game: "Abiotic Factor",
       description: "Wissenschaft, Überleben und die unvermeidliche Frage, wer schon wieder das Portal geöffnet hat. Entkommst du der Facility",
-      image: "/assets/abiotic-factor.png",
+      image: "/assets/abiotic-factor(1).png",
       status: "checking",
       players: 0,
       maxPlayers: 32,
