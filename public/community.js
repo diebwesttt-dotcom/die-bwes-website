@@ -57,6 +57,12 @@
       game: String(server.game || "Game Server"),
       description: String(server.description || ""),
       image: String(server.image || ""),
+      imageSize: String(server.imageSize || "cover"),
+      imagePosition: String(server.imagePosition || "50% 50%"),
+      imageRepeat: String(server.imageRepeat || "no-repeat"),
+      imageBackground: String(server.imageBackground || "#101426"),
+      visualHeight: Math.max(160, Number(server.visualHeight) || 285),
+      mobileVisualHeight: Math.max(160, Number(server.mobileVisualHeight) || 220),
       status: allowedStatuses.has(server.status) ? server.status : "offline",
       players,
       maxPlayers,
@@ -123,8 +129,16 @@
 
     const visual = document.createElement("div");
     visual.className = "server-card-visual";
+    visual.style.setProperty("--server-visual-height", `${server.visualHeight}px`);
+    visual.style.setProperty("--server-mobile-visual-height", `${server.mobileVisualHeight}px`);
+    visual.style.backgroundColor = server.imageBackground;
+
     if (server.image) {
-      visual.style.backgroundImage = `linear-gradient(180deg, rgba(7, 9, 18, 0.02), rgba(7, 9, 18, 0.98)), url("${server.image.replace(/"/g, "%22")}")`;
+      const safeImage = server.image.replace(/"/g, "%22");
+      visual.style.backgroundImage = `linear-gradient(180deg, rgba(7, 9, 18, 0.02), rgba(7, 9, 18, 0.98)), url("${safeImage}")`;
+      visual.style.backgroundSize = `100% 100%, ${server.imageSize}`;
+      visual.style.backgroundPosition = `center, ${server.imagePosition}`;
+      visual.style.backgroundRepeat = `no-repeat, ${server.imageRepeat}`;
     }
 
     const status = textElement("span", "server-live-badge", statusLabel(server.status));
@@ -291,6 +305,25 @@
     return servers.filter(function (server) {
       return !server.comingSoon;
     });
+  }
+
+  function sortServersByAvailability(servers) {
+    if (config.sortOnlineFirst === false) return servers.slice();
+
+    return servers
+      .map(function (server, originalIndex) {
+        return { server, originalIndex };
+      })
+      .sort(function (left, right) {
+        const leftGroup = left.server.comingSoon ? 2 : (left.server.status === "online" ? 0 : 1);
+        const rightGroup = right.server.comingSoon ? 2 : (right.server.status === "online" ? 0 : 1);
+
+        if (leftGroup !== rightGroup) return leftGroup - rightGroup;
+        return left.originalIndex - right.originalIndex;
+      })
+      .map(function (entry) {
+        return entry.server;
+      });
   }
 
   function renderHeroStatus(servers) {
@@ -966,10 +999,11 @@
     const grid = document.getElementById("game-server-grid");
     if (!grid) return;
 
+    const orderedServers = sortServersByAvailability(servers);
     const preservedRatio = currentScrollRatio();
     grid.replaceChildren();
 
-    servers.forEach(function (server) {
+    orderedServers.forEach(function (server) {
       grid.appendChild(createServerCard(server));
     });
 
@@ -978,9 +1012,9 @@
       updateCarouselControls();
     });
 
-    renderHeroStatus(servers);
-    renderStats(servers);
-    setupOrbitNavigation(servers);
+    renderHeroStatus(orderedServers);
+    renderStats(orderedServers);
+    setupOrbitNavigation(orderedServers);
   }
 
   async function refreshServer(server) {
