@@ -1,6 +1,10 @@
 window.COMMUNITY_CONFIG = {
   refreshIntervalSeconds: 60,
 
+  // Online-Server automatisch links, alle anderen rechts.
+  // Auf false setzen, um wieder die feste Reihenfolge unten zu verwenden.
+  sortOnlineFirst: true,
+
   servers: [
     {
       title: "Conan Exiles Enhanced",
