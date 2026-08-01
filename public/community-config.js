@@ -3,6 +3,24 @@ window.COMMUNITY_CONFIG = {
 
   servers: [
     {
+      title: "Conan Exiles Enhanced",
+      shortTitle: "Conan Exiles",
+      game: "Conan Exiles Enhanced",
+      description: "Eine brutale offene Welt voller Ruinen, Thralls und Bauprojekte, die garantiert viel kleiner geplant waren. Mit Steam-Workshop-Mods.",
+      image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/440900/header.jpg",
+      status: "checking",
+      players: 0,
+      maxPlayers: 20,
+      map: "Exiled Lands + Isle of Siptah",
+      address: "conan.diebwes.com:7780",
+      version: "",
+      versionLabel: "Server-Version",
+      statusEndpoint: "https://mcstatus.diebwes.com/api/server-status?server=conan",
+      joinUrl: "steam://connect/conan.diebwes.com:7780",
+      tags: ["Survival", "Open World", "Modded", "Workshop"],
+      accent: "amber"
+    },
+    {
       title: "Trouble in Terrorist Town",
       shortTitle: "TTT",
       game: "Garry's Mod",
