@@ -7,7 +7,7 @@ window.COMMUNITY_CONFIG = {
       shortTitle: "TTT",
       game: "Garry's Mod",
       description: "Täuschung, Teamplay und die unvermeidliche Frage, wer gerade schon wieder den Traitor-Raum geöffnet hat.",
-      image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/header.jpg",
+      image: "/assests/ttt.jpg",
       status: "checking",
       players: 0,
       maxPlayers: 32,
