@@ -114,8 +114,8 @@ window.COMMUNITY_CONFIG = {
       title: "MODPACK",
       shortTitle: "MODPACK",
       game: "Minecraft",
-      description: "Entkommst du den Backrooms?",
-      image: "/assets/backrooms.jpg",
+      description: "Käsiger Michael, öffne deine Tür.",
+      image: "/assets/stoneblock4.png",
       status: "checking",
       players: 0,
       maxPlayers: 67,
@@ -124,10 +124,10 @@ window.COMMUNITY_CONFIG = {
       version: "1.21.1",
       versionLabel: "Minecraft-Version",
       statusEndpoint: "https://mcstatus.diebwes.com/api/server-status?server=modpack",
-      modpackUrl: "https://www.curseforge.com/minecraft/modpacks/into-the-backrooms/files/8292234",
+      modpackUrl: "https://www.curseforge.com/minecraft/modpacks/ftb-stoneblock-4/files/8788623",
       modpackLabel: "Modpack herunterladen",
       joinUrl: "minecraft://?addExternalServer=Die%20Bwes%20Modpack|modpack.diebwes.com%3A25566",
-      tags: ["Modpack", "Cobblemon", "Community"],
+      tags: ["Modpack", "Stoneblock4", "Community"],
       accent: "green"
     },
     {
